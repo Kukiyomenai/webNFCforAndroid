@@ -1,20 +1,28 @@
+// フォームの送信ボタンがクリックされたときにNFCタグに書き込む処理を実行
 document.getElementById('writeForm').addEventListener('submit', async (e) => {
     e.preventDefault(); // デフォルトのフォーム送信を防ぎます
+
     try {
-        // 書き込む内容を取得
         const textToWrite = document.getElementById('textWrite').value;
 
-        // 1. NDEF メッセージを作成
-        //const message = new NDEFMessage([new NDEFTextRecord(textToWrite)]);
+        // NFCリーダーを有効化
+        const ndef = new NDEFReader();
 
-        // 2. NFC リーダーのインスタンスを作成
-        const ndef = new NDEFWriter();
+        // NFCリーダーがNFCタグを検出するのを待つ
+        await ndef.scan();
 
-        // 3. Sony RC-S380 デバイスと通信を確立
-        await ndef.write(usbDevice, textToWrite);
+        // NFCタグが検出されたら書き込みを行う
+        const tag = await ndef.read();
 
-        console.log('NFC タグにデータを書き込みました:', textToWrite);
+        // 書き込むデータを作成（テキストデータをUTF-8バイトに変換）
+        const encoder = new TextEncoder();
+        const dataToWrite = encoder.encode(textToWrite);
+
+        // NFCタグにデータを書き込む
+        await tag.write(dataToWrite);
+
+        console.log('NFCタグにデータを書き込みました:', textToWrite);
     } catch (error) {
-        console.error('NFC タグへの書き込み中にエラーが発生しました:', error);
+        console.error('NFCタグへの書き込み中にエラーが発生しました:', error);
     }
 });
