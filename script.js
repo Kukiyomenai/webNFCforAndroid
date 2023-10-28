@@ -3,23 +3,21 @@ document.getElementById('writeForm').addEventListener('submit', async (e) => {
     e.preventDefault(); // デフォルトのフォーム送信を防ぎます
 
     try {
-        const textToWrite = document.getElementById('textWrite').value;
+        const textToWrite = document.getElementById('textWrite').value; // フォームから入力されたテキストを取得
 
         // NFCリーダーを有効化
         const ndef = new NDEFReader();
 
-        // // NFCリーダーがNFCタグを検出するのを待つ
+        // NFCリーダーがNFCタグを検出するのを待つ
         await ndef.scan();
 
-        // // NFCタグが検出されたら書き込みを行う
+        // NFCタグが検出されたら書き込みを行う
         const tag = await ndef.read();
 
-        // // 書き込むデータを作成（テキストデータをUTF-8バイトに変換）
-        // const encoder = new TextEncoder();
-        // const dataToWrite = encoder.encode(textToWrite);
-
-        // // NFCタグにデータを書き込む
-        // await tag.write(dataToWrite);
+        // 入力されたテキストをNFCタグに書き込む
+        await tag.write({
+            records: [{ recordType: "text", data: textToWrite }], // 入力されたテキストをNFCタグに書き込む
+        });
 
         console.log('NFCタグにデータを書き込みました:', textToWrite);
     } catch (error) {
