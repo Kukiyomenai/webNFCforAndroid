@@ -8,18 +8,18 @@ document.getElementById('writeForm').addEventListener('submit', async (e) => {
         // NFCリーダーを有効化
         const ndef = new NDEFReader();
 
-        // NFCリーダーがNFCタグを検出するのを待つ
-        await ndef.scan();
+        // // NFCリーダーがNFCタグを検出するのを待つ
+        // await ndef.scan();
 
-        // NFCタグが検出されたら書き込みを行う
-        const tag = await ndef.read();
+        // // NFCタグが検出されたら書き込みを行う
+        // const tag = await ndef.read();
 
-        // 書き込むデータを作成（テキストデータをUTF-8バイトに変換）
-        const encoder = new TextEncoder();
-        const dataToWrite = encoder.encode(textToWrite);
+        // // 書き込むデータを作成（テキストデータをUTF-8バイトに変換）
+        // const encoder = new TextEncoder();
+        // const dataToWrite = encoder.encode(textToWrite);
 
-        // NFCタグにデータを書き込む
-        await tag.write(dataToWrite);
+        // // NFCタグにデータを書き込む
+        // await tag.write(dataToWrite);
 
         console.log('NFCタグにデータを書き込みました:', textToWrite);
     } catch (error) {
