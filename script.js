@@ -11,9 +11,6 @@ document.getElementById('writeForm').addEventListener('submit', async (e) => {
         // NFCリーダーがNFCタグを検出するのを待つ
         await ndef.scan();
 
-        // NFCタグが検出されたら書き込みを行う
-        // const tag = await ndef.read();　　
-
         // 入力されたテキストをNFCタグに書き込む
         await ndef.write({
             records: [{ recordType: "text", data: textToWrite }], // 入力されたテキストをNFCタグに書き込む
