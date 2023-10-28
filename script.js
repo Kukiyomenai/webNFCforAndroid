@@ -9,10 +9,10 @@ document.getElementById('writeForm').addEventListener('submit', async (e) => {
         const ndef = new NDEFReader();
 
         // // NFCリーダーがNFCタグを検出するのを待つ
-        // await ndef.scan();
+        await ndef.scan();
 
         // // NFCタグが検出されたら書き込みを行う
-        // const tag = await ndef.read();
+        const tag = await ndef.read();
 
         // // 書き込むデータを作成（テキストデータをUTF-8バイトに変換）
         // const encoder = new TextEncoder();
