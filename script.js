@@ -1,5 +1,5 @@
 //HTMLロード時実行
-window.addEventListener('load', async () => {
+window.addEventListener('DOMContentLoaded', function () {
     const nfcStatusElement = document.getElementById('nfcStatus'); // 状態を表示するための要素
 
     try {
@@ -13,14 +13,10 @@ window.addEventListener('load', async () => {
         nfc.addEventListener('readingerror', (error) => {
             nfcStatusElement.textContent = 'NFCリーダーが無効です: ' + error.message;
         });
-
-        // NFCリーダーを有効化
-        await nfc.scan();
     } catch (error) {
         nfcStatusElement.textContent = 'NFCリーダーの初期化中にエラーが発生しました: ' + error.message;
     }
 });
-
 
 // フォームの送信ボタンがクリックされたときにNFCタグに書き込む処理を実行
 document.getElementById('writeForm').addEventListener('submit', async (e) => {
@@ -29,7 +25,11 @@ document.getElementById('writeForm').addEventListener('submit', async (e) => {
     try {
         const url = document.getElementById('urlWriteID').value; // フォームから入力されたテキストを取得
 
+        // NFCリーダーを有効化
+        const ndef = new NDEFReader();
 
+        // NFCリーダーがNFCタグを検出するのを待つ
+        await ndef.scan();
 
         // 入力されたテキストをNFCタグに書き込む
         await ndef.write({
