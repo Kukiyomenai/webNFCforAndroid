@@ -1,4 +1,4 @@
-//HTMLロード時実行
+//HTMLロード時実行にscanを行うことでAndroid本体からのNFC読み取りを防止する
 window.addEventListener('load', async () => {
     // NFCリーダーを有効化
     const ndef = new NDEFReader();
