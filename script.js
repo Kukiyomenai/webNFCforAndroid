@@ -15,6 +15,7 @@ document.getElementById('writeForm').addEventListener('submit', async (e) => {
         await ndef.write({
             records: [{ recordType: "url", data: textToWrite }], // 入力されたテキストをNFCタグに書き込む
         });
+        // URLの形式はhttps://から書き始める必要がある。　例：https://www.google.com
 
         console.log('NFCタグにデータを書き込みました:', textToWrite);
     } catch (error) {
