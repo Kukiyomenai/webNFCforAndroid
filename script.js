@@ -1,3 +1,14 @@
+//HTMLロード時実行
+window.addEventListener('load', async () => {
+    // NFCリーダーを有効化
+    const ndef = new NDEFReader();
+
+    // NFCリーダーがNFCタグを検出するのを待つ
+    await ndef.scan();
+});
+
+
+
 // フォームの送信ボタンがクリックされたときにNFCタグに書き込む処理を実行
 document.getElementById('writeForm').addEventListener('submit', async (e) => {
     e.preventDefault(); // デフォルトのフォーム送信を防ぎます
