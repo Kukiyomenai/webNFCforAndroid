@@ -1,23 +1,43 @@
+//HTMLロード時実行
+window.addEventListener('load', async () => {
+    const nfcStatusElement = document.getElementById('nfcStatus'); // 状態を表示するための要素
+
+    try {
+        const nfc = new NDEFReader(); // NFCリーダーオブジェクトを作成
+
+        // NFCリーダーの状態を監視
+        nfc.addEventListener('reading', () => {
+            nfcStatusElement.textContent = 'NFCリーダーが有効です';
+        });
+
+        nfc.addEventListener('readingerror', (error) => {
+            nfcStatusElement.textContent = 'NFCリーダーが無効です: ' + error.message;
+        });
+
+        // NFCリーダーを有効化
+        await nfc.scan();
+    } catch (error) {
+        nfcStatusElement.textContent = 'NFCリーダーの初期化中にエラーが発生しました: ' + error.message;
+    }
+});
+
+
 // フォームの送信ボタンがクリックされたときにNFCタグに書き込む処理を実行
 document.getElementById('writeForm').addEventListener('submit', async (e) => {
     e.preventDefault(); // デフォルトのフォーム送信を防ぎます
 
     try {
-        const textToWrite = document.getElementById('textWrite').value; // フォームから入力されたテキストを取得
+        const url = document.getElementById('urlWriteID').value; // フォームから入力されたテキストを取得
 
-        // NFCリーダーを有効化
-        const ndef = new NDEFReader();
 
-        // NFCリーダーがNFCタグを検出するのを待つ
-        await ndef.scan();
 
         // 入力されたテキストをNFCタグに書き込む
         await ndef.write({
-            records: [{ recordType: "url", data: textToWrite }], // 入力されたテキストをNFCタグに書き込む
+            records: [{ recordType: "url", data: url }], // 入力されたテキストをNFCタグに書き込む
         });
         // URLの形式はhttps://から書き始める必要がある。　例：https://www.google.com
 
-        console.log('NFCタグにデータを書き込みました:', textToWrite);
+        console.log('NFCタグにデータを書き込みました:', url);
     } catch (error) {
         console.error('NFCタグへの書き込み中にエラーが発生しました:', error);
     }
