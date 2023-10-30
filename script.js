@@ -13,7 +13,7 @@ document.getElementById('writeForm').addEventListener('submit', async (e) => {
 
         // 入力されたテキストをNFCタグに書き込む
         await ndef.write({
-            records: [{ recordType: "text", data: textToWrite }], // 入力されたテキストをNFCタグに書き込む
+            records: [{ recordType: "url", data: textToWrite }], // 入力されたテキストをNFCタグに書き込む
         });
 
         console.log('NFCタグにデータを書き込みました:', textToWrite);
