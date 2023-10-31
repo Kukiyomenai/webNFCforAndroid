@@ -5,11 +5,13 @@
     <title>webNFCforAndroid</title>
 </head>
 <body>
-    <form id="writeForm">
-        <input type="text" name="urlWrite" id="urlWriteID">
-        <button type="submit">書き込み</button>
-    </form>
-    <p id="writtenData" style="display: none;"></p>
+    <p id="nfcStatus">NFCリーダーの状態：未確認</p>
+    <p id="cardStatus">カードの状態：未検出</p>
+
+    <input type="text" name="urlWrite" id="urlWriteID">
+    <button type="submit">書き込み</button>
+
+    <p id="writtenData"></p>
     <script type="text/javascript" src="./script.js"></script>
 </body>
 </html>
