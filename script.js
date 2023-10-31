@@ -24,11 +24,14 @@ const writeButton = document.getElementById('writeButton');
 writeButton.addEventListener('click', async () => {
 
     const writtenData = document.getElementById('writtenData'); // 書き込んだデータを表示する要素
-    const url = document.getElementById('urlWriteID').value; // フォームから入力されたテキストを取得
+    const url = document.getElementById('urlWriteID').value; // 入力されたテキストを取得
     const cardStatus = document.getElementById('cardStatus'); // カードの状態を表示する要素
-    const protocolSelect = document.getElementById('protocolSelect').value; // id属性を使用してセレクト要素の値を取得
+    const protocolSelect = document.getElementById('protocolSelect').value; // プロトコルをセレクト要素の値から取得
 
     try {
+        // プロトコルと入力されたテキストを結合してURLを作成
+        const writeUrl = protocolSelect + url;
+
         // NFCリーダーを有効化
         const ndef = new NDEFReader();
 
@@ -40,11 +43,10 @@ writeButton.addEventListener('click', async () => {
 
         // 入力されたテキストをNFCタグに書き込む
         await ndef.write({
-            records: [{ recordType: "url", data: url }], // 入力されたテキストをNFCタグに書き込む
+            records: [{ recordType: "url", data: writeUrl }], // 入力されたテキストをNFCタグに書き込む
         });
         // URLの形式はhttps://から書き始める必要がある。　例：https://www.google.com
 
-        const writeUrl = protocolSelect + url;
         // 書き込んだデータを表示
         writtenData.textContent = '書き込んだデータ： ' + writeUrl;
 
