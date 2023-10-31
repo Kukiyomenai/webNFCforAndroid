@@ -22,8 +22,8 @@ window.addEventListener('load', async () => {
 
 
 
-// フォームの送信ボタンがクリックされたときにNFCタグに書き込む処理を実行
-const writeButton = document.querySelector('button');
+// クリックされたときにNFCタグに書き込む処理を実行
+const writeButton = document.getElementById('writeButton');
 writeButton.addEventListener('click', async () => {
 
     const writtenDataElement = document.getElementById('writtenData'); // 書き込んだデータを表示する要素
