@@ -1,5 +1,8 @@
 //HTMLロード時実行にscanを行うことでAndroid本体からのNFC読み取りを防止する
 window.addEventListener('load', async () => {
+    const nfcStatus= document.getElementById('nfcStatus'); // NFCリーダーの状態を表示する要素
+    const cardStatus = document.getElementById('cardStatus'); // カードの状態を表示する要素
+
     // NFCリーダーを有効化
     const ndef = new NDEFReader();
 
@@ -7,13 +10,13 @@ window.addEventListener('load', async () => {
     await ndef.scan();
 
     ndef.addEventListener('reading', () => {
-        nfcStatusElement.textContent = 'NFCリーダーが有効です';
-        cardStatusElement.textContent = 'カードの状態：検出';
+        nfcStatus.textContent = 'NFCリーダーが有効です';
+        cardStatus.textContent = 'カードの状態：検出';
     });
 
     ndef.addEventListener('readingerror', (error) => {
-        nfcStatusElement.textContent = 'NFCリーダーが無効です: ' + error.message;
-        cardStatusElement.textContent = 'カードの状態：未検出';
+        nfcStatus.textContent = 'NFCリーダーが無効です: ' + error.message;
+        cardStatus.textContent = 'カードの状態：未検出';
     });
 });
 
