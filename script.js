@@ -24,11 +24,11 @@ const writeButton = document.getElementById('writeButton');
 writeButton.addEventListener('click', async () => {
 
     const writtenData = document.getElementById('writtenData'); // 書き込んだデータを表示する要素
+    const url = document.getElementById('urlWriteID').value; // フォームから入力されたテキストを取得
+    const cardStatus = document.getElementById('cardStatus'); // カードの状態を表示する要素
+    const protocolSelect = document.getElementById('protocolSelect').value; // id属性を使用してセレクト要素の値を取得
 
     try {
-        const url = document.getElementById('urlWriteID').value; // フォームから入力されたテキストを取得
-        const cardStatus = document.getElementById('cardStatus'); // カードの状態を表示する要素
-
         // NFCリーダーを有効化
         const ndef = new NDEFReader();
 
@@ -44,11 +44,14 @@ writeButton.addEventListener('click', async () => {
         });
         // URLの形式はhttps://から書き始める必要がある。　例：https://www.google.com
 
+        const writeUrl = protocolSelect + url;
         // 書き込んだデータを表示
-        writtenData.textContent = '書き込んだデータ： ' + url;
+        writtenData.textContent = '書き込んだデータ： ' + writeUrl;
 
-        console.log('NFCタグにデータを書き込みました:', url);
+        console.log('NFCタグにデータを書き込みました:', writeUrl);
     } catch (error) {
+        // 表示を「NFCカードをかざしてください」に変更
+        cardStatus.textContent = 'カードの状態：未検出';
         writtenData.textContent = '書き込み中にエラーが発生しました： ' + error;
         console.error('NFCタグへの書き込み中にエラーが発生しました:', error);
     }
