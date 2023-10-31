@@ -8,12 +8,15 @@ window.addEventListener('load', async () => {
     // NFCリーダーがNFCタグを検出するのを待つ
     await ndef.scan();
 
+
+    // NFCリーダーがNFCカードを検出した場合に実行されるイベントリスナー
     ndef.addEventListener('reading', () => {
-        cardStatus.textContent = 'カードの状態：検出';
+        cardStatus.textContent = 'カードの状態：検出'; // カードの状態を「検出」に更新
     });
 
+    // NFCリーダーがエラーを検出した場合に実行されるイベントリスナー
     ndef.addEventListener('readingerror', (error) => {
-        cardStatus.textContent = 'カードの状態：エラー ' + error.message;
+        cardStatus.textContent = 'カードの状態：エラー ' + error.message; // カードの状態を「エラー」に更新し、エラーメッセージを表示
     });
 });
 
@@ -35,7 +38,7 @@ writeButton.addEventListener('click', async () => {
         // NFCリーダーを有効化
         const ndef = new NDEFReader();
 
-        // 表示を「NFCカードをかざしてください」に変更
+        // カードの状態を「NFCカードをかざしてください」に更新
         cardStatus.textContent = 'NFCカードをかざしてください';
 
         // NFCリーダーがNFCタグを検出するのを待つ
@@ -47,14 +50,17 @@ writeButton.addEventListener('click', async () => {
         });
         // URLの形式はhttps://から書き始める必要がある。　例：https://www.google.com
 
-        // 書き込んだデータを表示
+        // 書き込んだデータを「書きこんだデータ」に更新し、urlを表示
         writtenData.textContent = '書き込んだデータ： ' + writeUrl;
 
         console.log('NFCタグにデータを書き込みました:', writeUrl);
     } catch (error) {
-        // 表示を「NFCカードをかざしてください」に変更
+        // カードの状態を「カードの状態：未検出」に更新
         cardStatus.textContent = 'カードの状態：未検出';
+
+        // 書き込んだデータを「エラー」に更新し、エラーメッセージを表示
         writtenData.textContent = '書き込み中にエラーが発生しました： ' + error;
+
         console.error('NFCタグへの書き込み中にエラーが発生しました:', error);
     }
 });
