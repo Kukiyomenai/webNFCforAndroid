@@ -6,12 +6,12 @@ window.addEventListener('load', async () => {
     // NFCリーダーがNFCタグを検出するのを待つ
     await ndef.scan();
 
-    nfc.addEventListener('reading', () => {
+    ndef.addEventListener('reading', () => {
         nfcStatusElement.textContent = 'NFCリーダーが有効です';
         cardStatusElement.textContent = 'カードの状態：検出';
     });
 
-    nfc.addEventListener('readingerror', (error) => {
+    ndef.addEventListener('readingerror', (error) => {
         nfcStatusElement.textContent = 'NFCリーダーが無効です: ' + error.message;
         cardStatusElement.textContent = 'カードの状態：未検出';
     });
