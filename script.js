@@ -1,23 +1,20 @@
 //HTMLロード時実行にscanを行うことでAndroid本体からのNFC読み取りを防止する
 window.addEventListener('load', async () => {
-    const nfcStatus= document.getElementById('nfcStatus'); // NFCリーダーの状態を表示する要素
     const cardStatus = document.getElementById('cardStatus'); // カードの状態を表示する要素
 
     // NFCリーダーを有効化
     const ndef = new NDEFReader();
 
-    // NFCリーダーがNFCタグを検出するのを待つ
-    await ndef.scan();
-
     ndef.addEventListener('reading', () => {
-        nfcStatus.textContent = 'NFCリーダーが有効です';
         cardStatus.textContent = 'カードの状態：検出';
     });
 
     ndef.addEventListener('readingerror', (error) => {
-        nfcStatus.textContent = 'NFCリーダーが無効です: ' + error.message;
-        cardStatus.textContent = 'カードの状態：未検出';
+        cardStatus.textContent = 'カードの状態：エラー ' + error.message;
     });
+
+    // NFCリーダーがNFCタグを検出するのを待つ
+    await ndef.scan();
 });
 
 
@@ -26,13 +23,17 @@ window.addEventListener('load', async () => {
 const writeButton = document.getElementById('writeButton');
 writeButton.addEventListener('click', async () => {
 
-    const writtenDataElement = document.getElementById('writtenData'); // 書き込んだデータを表示する要素
+    const writtenData = document.getElementById('writtenData'); // 書き込んだデータを表示する要素
 
     try {
         const url = document.getElementById('urlWriteID').value; // フォームから入力されたテキストを取得
+        const cardStatus = document.getElementById('cardStatus'); // カードの状態を表示する要素
 
         // NFCリーダーを有効化
         const ndef = new NDEFReader();
+
+        // 表示を「NFCカードをかざしてください」に変更
+        cardStatus.textContent = 'NFCカードをかざしてください';
 
         // NFCリーダーがNFCタグを検出するのを待つ
         await ndef.scan();
@@ -44,11 +45,11 @@ writeButton.addEventListener('click', async () => {
         // URLの形式はhttps://から書き始める必要がある。　例：https://www.google.com
 
         // 書き込んだデータを表示
-        writtenDataElement.textContent = '書き込んだデータ: ' + url;
-        writtenDataElement.style.display = 'block'; // データを表示
+        writtenData.textContent = '書き込んだデータ： ' + url;
 
         console.log('NFCタグにデータを書き込みました:', url);
     } catch (error) {
+        writtenData.textContent = '書き込み中にエラーが発生しました： ' + error;
         console.error('NFCタグへの書き込み中にエラーが発生しました:', error);
     }
 });
