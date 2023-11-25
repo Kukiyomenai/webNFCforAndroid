@@ -55,9 +55,9 @@ writeButton.addEventListener('click', async () => {
         // URLの形式はhttps://から書き始める必要がある。　例：https://www.google.com
 
         // 書き込んだデータを「書きこんだデータ」に更新し、urlを表示
-        writtenData.textContent = '書き込んだデータ： ' + writeUrl;
+        writtenData.textContent = '書き込んだデータ：' + writeUrl;
 
-        console.log('NFCタグにデータを書き込みました:', writeUrl);
+        console.log('NFCタグにデータを書き込みました：', writeUrl);
 
         // カードの状態を「カードの状態：未検出」に更新
         cardStatus.textContent = 'カードの状態：未検出';
@@ -98,8 +98,8 @@ readButton.addEventListener('click', async () => {
                 // 最初のレコードがURLの場合、URLを表示
                 if (records.length > 0 && records[0].recordType === 'url') {
                     const url = new TextDecoder().decode(records[0].data);
-                    readData.textContent = `読み込んだデータ: ${url}`;
-                    console.log('NFCタグからデータを読み取りました:', url);
+                    readData.textContent = `読み込んだデータ：${url}`;
+                    console.log('NFCタグからデータを読み取りました：', url);
                 } else {
                     readData.textContent = 'サポートされていないレコードタイプ';
                 }
