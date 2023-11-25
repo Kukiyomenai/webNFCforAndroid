@@ -72,7 +72,7 @@ const readButton = document.getElementById('readButton');
 readButton.addEventListener('click', async () => {
     console.log("A");
     const cardStatus = document.getElementById('cardStatus'); // カードの状態を表示する要素
-    const writtenData = document.getElementById('dataText'); // 読み取ったデータを表示する要素
+    const readData = document.getElementById('dataText'); // 読み取ったデータを表示する要素
 
     try {
         // NFCリーダーを有効化
