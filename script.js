@@ -26,9 +26,9 @@ window.addEventListener('load', async () => {
 const writeButton = document.getElementById('writeButton');
 writeButton.addEventListener('click', async () => {
 
+    const cardStatus = document.getElementById('cardStatus'); // カードの状態を表示する要素
     const writtenData = document.getElementById('dataText'); // 書き込んだデータを表示する要素
     const url = document.getElementById('urlWriteID').value; // 入力されたテキストを取得
-    const cardStatus = document.getElementById('cardStatus'); // カードの状態を表示する要素
     const protocolSelect = document.getElementById('protocolSelect').value; // プロトコルをセレクト要素の値から取得
 
     try {
@@ -61,6 +61,47 @@ writeButton.addEventListener('click', async () => {
         // 書き込んだデータを「エラー」に更新し、エラーメッセージを表示
         writtenData.textContent = '書き込み中にエラーが発生しました： ' + error;
 
-        console.error('NFCタグへの書き込み中にエラーが発生しました:', error);
+        console.log('NFCタグへの書き込み中にエラーが発生しました:', error);
+    }
+});
+
+
+
+// クリックされたときにNFCタグを読み取る処理を実行
+const readButton = document.getElementById('readButton');
+readButton.addEventListener('click', async () => {
+    console.log("A");
+    const cardStatus = document.getElementById('cardStatus'); // カードの状態を表示する要素
+    const writtenData = document.getElementById('dataText'); // 読み取ったデータを表示する要素
+
+    try {
+        // NFCリーダーを有効化
+        const ndef = new NDEFReader();
+
+        // カードの状態を「NFCカードをかざってください」に更新
+        cardStatus.textContent = 'NFCカードをかざってください';
+
+        // NFCリーダーがNFCタグを検出するのを待つ
+        const message = await ndef.scan();
+
+        // 読み取ったデータからカードのIDとURLを取得
+        const cardId = message.records[0].id;
+        const cardUrl = message.records[0].data;
+
+        // カードの状態を「カードのIDとURLを読み取りました」に更新
+        cardStatus.textContent = 'カードのIDとURLを読み取りました';
+
+        // 読み取ったデータを「カードのID： [ID]、URL： [URL]」に更新し、表示
+        readData.textContent = `カードのID： ${cardId}、URL： ${cardUrl}`;
+
+        console.log('NFCタグからデータを読み取りました:', cardId, cardUrl);
+    } catch (error) {
+        // カードの状態を「カードの状態：未検出」に更新
+        cardStatus.textContent = 'カードの状態：未検出';
+
+        // 読み取ったデータを「エラー」に更新し、エラーメッセージを表示
+        readData.textContent = '読み取り中にエラーが発生しました： ' + error;
+
+        console.error('NFCタグの読み取り中にエラーが発生しました:', error);
     }
 });
