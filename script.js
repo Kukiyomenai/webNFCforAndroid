@@ -26,7 +26,7 @@ window.addEventListener('load', async () => {
 const writeButton = document.getElementById('writeButton');
 writeButton.addEventListener('click', async () => {
 
-    const writtenData = document.getElementById('writtenData'); // 書き込んだデータを表示する要素
+    const writtenData = document.getElementById('dataText'); // 書き込んだデータを表示する要素
     const url = document.getElementById('urlWriteID').value; // 入力されたテキストを取得
     const cardStatus = document.getElementById('cardStatus'); // カードの状態を表示する要素
     const protocolSelect = document.getElementById('protocolSelect').value; // プロトコルをセレクト要素の値から取得
