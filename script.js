@@ -82,19 +82,21 @@ readButton.addEventListener('click', async () => {
         cardStatus.textContent = 'NFCカードをかざってください';
 
         // NFCリーダーがNFCタグを検出するのを待つ
-        const message = await ndef.scan();
+        await ndef.scan();
 
-        // 読み取ったデータからカードのIDとURLを取得
-        const cardId = message.records[0].id;
-        const cardUrl = message.records[0].data;
-
-        // カードの状態を「カードのIDとURLを読み取りました」に更新
-        cardStatus.textContent = 'カードのIDとURLを読み取りました';
-
-        // 読み取ったデータを「カードのID： [ID]、URL： [URL]」に更新し、表示
-        readData.textContent = `カードのID： ${cardId}、URL： ${cardUrl}`;
-
-        console.log('NFCタグからデータを読み取りました:', cardId, cardUrl);
+        // データを読み込んだ
+        reader.addEventListener('reading', ({ serialNumber, message }) => {
+            const record = message.records[0];
+            const { data, encoding, recordType } = record;
+            
+            if (recordType === 'url') {
+                const textDecoder = new TextDecoder(encoding);
+                const text = textDecoder.decode(data);
+                console.log(`Text: ${text}`);
+            }
+        });
+        
+        console.log('NFCタグからデータを読み取りました:', textDecoder, text);
     } catch (error) {
         // カードの状態を「カードの状態：未検出」に更新
         cardStatus.textContent = 'カードの状態：未検出';
