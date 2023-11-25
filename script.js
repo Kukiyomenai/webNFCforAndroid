@@ -102,6 +102,6 @@ readButton.addEventListener('click', async () => {
         // 読み取ったデータを「エラー」に更新し、エラーメッセージを表示
         readData.textContent = '読み取り中にエラーが発生しました： ' + error;
 
-        console.error('NFCタグの読み取り中にエラーが発生しました:', error);
+        console.log('NFCタグの読み取り中にエラーが発生しました:', error);
     }
 });
