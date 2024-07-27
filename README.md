@@ -1,2 +1,2 @@
 # webNFCforAndroid
-https://kanamoji3.github.io/webNFCforAndroid/
+https://kukiyomenai.github.io/webNFCforAndroid/
